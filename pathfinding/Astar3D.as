@@ -6,15 +6,15 @@
 	 * edited by MSGHero
 	 */
 	
-	public class PathFinder3D {
+	public class Astar3D {
 		
 		/**
-		 * Finds the shortest manhattan path between two tiles using A*
+		 * Finds the shortest manhattan path between two tiles using A*. For use with normalized positions (int(obj.x / TILE_SIZE), etc).
 		 * @param	start The starting tile
 		 * @param	end The ending tile
 		 * @param	numRows Boundary condition: number of rows of the entire grid
 		 * @param	numCols Boundary condition: number of columns of the entire grid
-		 * @param	cost A vec.vec.uint of the cost heuristic: the obstacle array
+		 * @param	cost A vec.vec.uint of the cost heuristic, aka the obstacle array
 		 * @param   maxHeight Boundary condition: maximum height difference of a tile that will not be ignored (maxHeight + 1 will be ignored)
 		 * @param   maxManh Boundary condition: the maximum length the path is allowed to be (maximum 2D displacement from start to finish)
 		 * @return An array of tiles from the starting tile to the ending tile including the starting tile, or null if no path is found

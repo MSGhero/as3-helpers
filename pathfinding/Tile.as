@@ -1,7 +1,7 @@
 package pathfinding {
 	
 	/**
-	 * ...
+	 * Generic tile class for Astar3D
 	 * @author MSGHero
 	 */
 	
@@ -15,6 +15,12 @@ package pathfinding {
 		public var c:Number; //cost
 		public var cameFrom:Tile; //previous tile
 		
+		/**
+		 * Creates a new tile
+		 * @param	row The tile's row
+		 * @param	col The tile's column
+		 * @param	alt The tile's altitude
+		 */
 		public function Tile(row:int = 0, col:int = 0, alt:int = 0) {
 			this.row = row;
 			this.col = col;
