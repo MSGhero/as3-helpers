@@ -50,5 +50,12 @@ package  {
 				rects.push(bc.rects[i]);
 			}
 		}
+		
+		/**
+		 * Returns the number of commands this blitcommand currently contains
+		 */
+		public function get length():int {
+			return pts.length;
+		}
 	}
 }

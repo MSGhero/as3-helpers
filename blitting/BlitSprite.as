@@ -33,6 +33,8 @@ package  {
 		 * Creates a new blitsprite
 		 * @param	json The json spritesheet info
 		 * @param	reference Reference sprite name from which regis pt info will be taken
+		 * @param   altRegisX x coordinate of the registration point (alternative to reference)
+		 * @param   altRegisY y coordinate of the registration point (alternative to reference)
 		 * @param   useAnimsFrom (optional) A blitsprite from which to reuse animation data.  json, reference, and altRegisX/Y are ignored if this is defined
 		 */
 		public function BlitSprite(json:Object, reference:String, altRegisX:int = NaN, altRegisY:int = NaN, useAnimsFrom:BlitSprite = null) {
