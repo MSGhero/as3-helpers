@@ -49,7 +49,7 @@ package {
 		private static function keyDown(e:KeyboardEvent):void {
 			down[e.keyCode] = true;
 			pressed[e.keyCode] = !(e.keyCode in pressed);
-			delete released[e.keyCode]; // clears released
+			delete released[e.keyCode];
 		}
 		
 		/**
@@ -62,6 +62,13 @@ package {
 			released[e.keyCode] = true;
 		}
 		
+		/**
+		 * Checks the specified dictionary for the keys
+		 * @param	d The key state dictionary
+		 * @param	args The keys that were pressed
+		 * @param	any If only one key needs to be matched to return true
+		 * @return If all/any keys exist in the dictionary and are true 
+		 */
 		private static function getState(d:Dictionary, args:Array, any:Boolean = false):Boolean {
 			
 			var matches:uint = 0;
@@ -90,7 +97,7 @@ package {
 		 * @param	...keys Keycodes to check
 		 * @return If any of the passed keycodes are down
 		 */
-		public static function areAnyDown(...keys):Boolean {
+		public static function anyDown(...keys):Boolean {
 			return getState(down, keys, true);
 		}
 		
@@ -104,16 +111,25 @@ package {
 		}
 		
 		/**
+		 * Checks if any of the passed keycodes have just been released.  Use !anyDown() if checking if any keys have been released longer than 1 frame
+		 * @param	...keys Keycodes to check
+		 * @return If any of the passed keycodes have just been released
+		 */
+		public static function anyReleased(...keys):Boolean {
+			return getState(released, keys, true);
+		}
+		
+		/**
 		 * Checks if all of the passed keycodes have just been pressed.  Use isDown() if checking if a key has been held down longer than 1 frame
 		 * @param	...keys Keycodes to check
 		 * @return If all of the passed keycodes have just been pressed
 		 */
-		public static function justPressed(...keys):Boolean {
+		public static function isPressed(...keys):Boolean {
 			return getState(pressed, keys);
 		}
 		
 		/**
-		 * Checks if any of the passed keycodes have just been pressed.  Use anyDown() if checking if a key has been held down longer than 1 frame
+		 * Checks if any of the passed keycodes have just been pressed.  Use anyDown() if checking if any keys have been held down longer than 1 frame
 		 * @param	...keys Keycodes to check
 		 * @return If any of the passed keycodes have just been pressed
 		 */
