@@ -73,6 +73,8 @@ package {
 			
 			var matches:uint = 0;
 			
+			if (args.length > 0 && args[0] is Array) args = args[0];
+			
 			for (var i:uint = 0; i < args.length; i++) {
 				if (d[args[i]] != undefined && d[args[i]]) {
 					if (any) return true;
@@ -85,7 +87,7 @@ package {
 		
 		/**
 		 * Checks if all of the passed keycodes are down
-		 * @param	...keys Keycodes to check
+		 * @param	...keys Keycodes to check, can be uints written out or in an array
 		 * @return If all of the passed keycodes are down
 		 */
 		public static function isDown(...keys):Boolean {
@@ -94,7 +96,7 @@ package {
 		
 		/**
 		 * Checks if any of the passed keycodes are down
-		 * @param	...keys Keycodes to check
+		 * @param	...keys Keycodes to check, can be uints written out or in an array
 		 * @return If any of the passed keycodes are down
 		 */
 		public static function anyDown(...keys):Boolean {
@@ -103,7 +105,7 @@ package {
 		
 		/**
 		 * Checks if all of the passed keycodes have just been released.  Use !isDown() if checking if a key has been released longer than 1 frame
-		 * @param	...keys Keycodes to check
+		 * @param	...keys Keycodes to check, can be uints written out or in an array
 		 * @return If all of the passed keycodes have just been released
 		 */
 		public static function isReleased(...keys):Boolean {
@@ -112,7 +114,7 @@ package {
 		
 		/**
 		 * Checks if any of the passed keycodes have just been released.  Use !anyDown() if checking if any keys have been released longer than 1 frame
-		 * @param	...keys Keycodes to check
+		 * @param	...keys Keycodes to check, can be uints written out or in an array
 		 * @return If any of the passed keycodes have just been released
 		 */
 		public static function anyReleased(...keys):Boolean {
@@ -121,7 +123,7 @@ package {
 		
 		/**
 		 * Checks if all of the passed keycodes have just been pressed.  Use isDown() if checking if a key has been held down longer than 1 frame
-		 * @param	...keys Keycodes to check
+		 * @param	...keys Keycodes to check, can be uints written out or in an array
 		 * @return If all of the passed keycodes have just been pressed
 		 */
 		public static function isPressed(...keys):Boolean {
@@ -130,7 +132,7 @@ package {
 		
 		/**
 		 * Checks if any of the passed keycodes have just been pressed.  Use anyDown() if checking if any keys have been held down longer than 1 frame
-		 * @param	...keys Keycodes to check
+		 * @param	...keys Keycodes to check, can be uints written out or in an array
 		 * @return If any of the passed keycodes have just been pressed
 		 */
 		public static function anyPressed(...keys):Boolean {
