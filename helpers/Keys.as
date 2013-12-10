@@ -20,7 +20,7 @@ package {
 		}
 		
 		/**
-		 * Initializes the keyup/keydown listeners
+		 * Initializes the keyup/keydown listeners. Must be called before anything else.
 		 * @param	stage
 		 */
 		public static function init(stage:Stage):void {
@@ -29,7 +29,7 @@ package {
 		}
 		
 		/**
-		 * Removes the keyup/keydown listeners
+		 * Removes the keyup/keydown listeners.
 		 * @param	stage
 		 */
 		public static function uninit(stage:Stage):void {
@@ -43,7 +43,86 @@ package {
 		}
 		
 		/**
-		 * Sets the key in down to true and the key in press if it does not already exist
+		 * Resets the keys: pressed keys are set to false and released keys are deleted.  Call this at the end of the main loop.
+		 */
+		public static function reset():void {
+			
+			released = new Dictionary();
+			
+			for (var index:String in pressed) {
+				pressed[index] = false;
+			}
+		}
+		
+		/**
+		 * Checks if all of the passed keycodes are down.
+		 * @param	...keys Keycodes to check, can be uints written out or in an array
+		 * @return If all of the passed keycodes are down.
+		 */
+		public static function isDown(...keys):Boolean {
+			return getState(down, keys);
+		}
+		
+		/**
+		 * Checks if any of the passed keycodes are down.
+		 * @param	...keys Keycodes to check, can be uints written out or in an array
+		 * @return If any of the passed keycodes are down.
+		 */
+		public static function anyDown(...keys):Boolean {
+			return getState(down, keys, true);
+		}
+		
+		/**
+		 * Checks if all of the passed keycodes have just been released.  Use !isDown() if checking if a key has been released longer than 1 frame.
+		 * @param	...keys Keycodes to check, can be uints written out or in an array
+		 * @return If all of the passed keycodes have just been released.
+		 */
+		public static function isReleased(...keys):Boolean {
+			return getState(released, keys);
+		}
+		
+		/**
+		 * Checks if any of the passed keycodes have just been released.  Use !anyDown() if checking if any keys have been released longer than 1 frame.
+		 * @param	...keys Keycodes to check, can be uints written out or in an array
+		 * @return If any of the passed keycodes have just been released.
+		 */
+		public static function anyReleased(...keys):Boolean {
+			return getState(released, keys, true);
+		}
+		
+		/**
+		 * Checks if all of the passed keycodes have just been pressed.  Use isDown() if checking if a key has been held down longer than 1 frame.
+		 * @param	...keys Keycodes to check, can be uints written out or in an array
+		 * @return If all of the passed keycodes have just been pressed.
+		 */
+		public static function isPressed(...keys):Boolean {
+			return getState(pressed, keys);
+		}
+		
+		/**
+		 * Checks if any of the passed keycodes have just been pressed.  Use anyDown() if checking if any keys have been held down longer than 1 frame.
+		 * @param	...keys Keycodes to check, can be uints written out or in an array
+		 * @return If any of the passed keycodes have just been pressed.
+		 */
+		public static function anyPressed(...keys):Boolean {
+			return getState(pressed, keys, true);
+		}
+		
+		/**
+		 * Checks if any key has just been pressed.
+		 * @return If any key has just been pressed.
+		 */
+		public static function anyKey():Boolean {
+			
+			for (var index:String in pressed) {
+				if (pressed[index]) return true;
+			}
+			
+			return false;
+		}
+		
+		/**
+		 * Sets the key in down to true and the key in press if it does not already exist.
 		 * @param	e
 		 */
 		private static function keyDown(e:KeyboardEvent):void {
@@ -53,7 +132,7 @@ package {
 		}
 		
 		/**
-		 * Sets the key in released to true, deletes the keys in pressed and down
+		 * Sets the key in released to true, deletes the keys in pressed and down.
 		 * @param	e
 		 */
 		private static function keyUp(e:KeyboardEvent):void {
@@ -63,11 +142,11 @@ package {
 		}
 		
 		/**
-		 * Checks the specified dictionary for the keys
+		 * Checks the specified dictionary for the keys.
 		 * @param	d The key state dictionary
 		 * @param	args The keys that were pressed
 		 * @param	any If only one key needs to be matched to return true
-		 * @return If all/any keys exist in the dictionary and are true 
+		 * @return If all/any keys exist in the dictionary and are true.
 		 */
 		private static function getState(d:Dictionary, args:Array, any:Boolean = false):Boolean {
 			
@@ -83,85 +162,6 @@ package {
 			}
 			
 			return matches == args.length;
-		}
-		
-		/**
-		 * Checks if all of the passed keycodes are down
-		 * @param	...keys Keycodes to check, can be uints written out or in an array
-		 * @return If all of the passed keycodes are down
-		 */
-		public static function isDown(...keys):Boolean {
-			return getState(down, keys);
-		}
-		
-		/**
-		 * Checks if any of the passed keycodes are down
-		 * @param	...keys Keycodes to check, can be uints written out or in an array
-		 * @return If any of the passed keycodes are down
-		 */
-		public static function anyDown(...keys):Boolean {
-			return getState(down, keys, true);
-		}
-		
-		/**
-		 * Checks if all of the passed keycodes have just been released.  Use !isDown() if checking if a key has been released longer than 1 frame
-		 * @param	...keys Keycodes to check, can be uints written out or in an array
-		 * @return If all of the passed keycodes have just been released
-		 */
-		public static function isReleased(...keys):Boolean {
-			return getState(released, keys);
-		}
-		
-		/**
-		 * Checks if any of the passed keycodes have just been released.  Use !anyDown() if checking if any keys have been released longer than 1 frame
-		 * @param	...keys Keycodes to check, can be uints written out or in an array
-		 * @return If any of the passed keycodes have just been released
-		 */
-		public static function anyReleased(...keys):Boolean {
-			return getState(released, keys, true);
-		}
-		
-		/**
-		 * Checks if all of the passed keycodes have just been pressed.  Use isDown() if checking if a key has been held down longer than 1 frame
-		 * @param	...keys Keycodes to check, can be uints written out or in an array
-		 * @return If all of the passed keycodes have just been pressed
-		 */
-		public static function isPressed(...keys):Boolean {
-			return getState(pressed, keys);
-		}
-		
-		/**
-		 * Checks if any of the passed keycodes have just been pressed.  Use anyDown() if checking if any keys have been held down longer than 1 frame
-		 * @param	...keys Keycodes to check, can be uints written out or in an array
-		 * @return If any of the passed keycodes have just been pressed
-		 */
-		public static function anyPressed(...keys):Boolean {
-			return getState(pressed, keys, true);
-		}
-		
-		/**
-		 * Checks if any key has just been pressed
-		 * @return If any key has just been pressed
-		 */
-		public static function anyKey():Boolean {
-			
-			for (var index:String in pressed) {
-				if (pressed[index]) return true;
-			}
-			
-			return false;
-		}
-		
-		/**
-		 * Resets the keys: pressed keys are set to false and released keys are deleted.  Call this at the end of the main loop.
-		 */
-		public static function reset():void {
-			
-			released = new Dictionary();
-			
-			for (var index:String in pressed) {
-				pressed[index] = false;
-			}
 		}
 	}
 }
